@@ -1,0 +1,18 @@
+.Navigation{
+    margin-left: 1.5rem;
+}
+.Navigation__items{
+    display: flex;
+
+}
+.Navigation__items-Links{
+    font-weight: 500;
+    font-size: .875rem;
+    line-height: 1.25rem;
+    padding: 0.5rem 0.75rem 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    color: rgb(15 23 42/1);
+}
+.Navigation__items-Links:hover{
+    background-color: rgba(238, 238, 238, 1);
+}

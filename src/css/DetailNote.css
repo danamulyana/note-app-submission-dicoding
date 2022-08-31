@@ -1,0 +1,31 @@
+.Detail-Note__container{
+    margin: 3rem;
+}
+.Detail-Note__header{
+    display: flex;
+    justify-content: space-between;
+}
+.Detail-Note__header .btn{
+    width: 50px;
+    height: 50px;
+    padding: 12px 10px;
+    border-radius: 35px;
+    font-size: 24px;
+    line-height: 1.33;
+    text-align: center;
+    display: inline-block;
+    white-space: nowrap;
+    vertical-align: middle;
+    margin-left: 1rem;
+}
+.Detail-Note__title{
+    font-weight: 700;
+    font-size: 2.5em;
+    padding: 0 0 10px 0;
+}
+.Detail-Note__createdAt{
+    font-weight: 300;
+    font-size: 1.2em;
+    padding-bottom: 10px;
+    display: inline-block;
+}

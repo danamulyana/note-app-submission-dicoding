@@ -1,0 +1,25 @@
+.NoteList{
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+}
+.Note-item{
+    box-shadow: 0 0 #0000,0 0 #0000,0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    max-width: 24rem;
+}
+.Note-item__h5{
+    color: rgb(17 24 39/1);
+    letter-spacing: -.025em;
+    font-weight: 700;
+    line-height: 2rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+.Note-item__CreatedAt{
+    font-weight: 400;
+    color: rgb(85, 88, 93);
+    display: inline-block;
+    margin-bottom: .5rem;
+}
