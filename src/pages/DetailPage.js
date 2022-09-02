@@ -1,55 +1,82 @@
 import React from "react";
-import { getNote, archiveNote,unarchiveNote,deleteNote } from "../utils/local-data"
+import { getNote, archiveNote,unarchiveNote,deleteNote } from "../utils/network-data"
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import DetailNote from "../components/DetailNote";
 import Page404 from "./Page404";
 
-function DetailPageWrapper() {
+function DetailPage() {
     const { id } = useParams();
     const navigation = useNavigate();
+    const [note,setNote] = React.useState();
 
-    return <DetailPage id={id} navigation={navigation} />;
+    React.useEffect(() => {
+        async function getNoteFunc(){
+            const { data } = await getNote(id);
+
+            setNote(data);
+        }
+
+        getNoteFunc();
+    },[]);
+
+    const onArchiveHandler = () => {
+
+    }
+
+    const onDeleteHandler = () => {
+
+    }
+
+    if (!note) {
+        return <Page404 />;
+    }
+
+    return(
+        <section>
+            <DetailNote {...note} onArsip={onArchiveHandler} onDelete={onDeleteHandler} />
+        </section>
+    )
 }
 
-class DetailPage extends React.Component{
-    constructor(props){
-        super(props);
+// class DetailPage extends React.Component{
+//     constructor(props){
+//         super(props);
 
-        this.state = {
-            note : getNote(props.id),
-        }
+//         this.state = {
+//             note : getNote(props.id),
+//         }
 
-        this.onArchiveHandler = this.onArchiveHandler.bind(this);
-        this.onDeleteHandler = this.onDeleteHandler.bind(this);
-    }
+//         this.onArchiveHandler = this.onArchiveHandler.bind(this);
+//         this.onDeleteHandler = this.onDeleteHandler.bind(this);
+//     }
 
-    onArchiveHandler(){
-        if(!this.state.note.archived){
-            archiveNote(this.state.note.id);
-        }else{
-            unarchiveNote(this.state.note.id);
-        }
+//     onArchiveHandler(){
+//         if(!this.state.note.archived){
+//             archiveNote(this.state.note.id);
+//         }else{
+//             unarchiveNote(this.state.note.id);
+//         }
 
-        this.props.navigation('/archives');    
-    }
+//         this.props.navigation('/archives');    
+//     }
 
-    onDeleteHandler(){
-        deleteNote(this.state.note.id);
-        this.props.navigation('/'); 
-    }
+//     onDeleteHandler(){
+//         deleteNote(this.state.note.id);
+//         this.props.navigation('/'); 
+//     }
 
-    render(){
-        if (!this.state.note) {
-            return <Page404 />;
-        }
+//     render(){
+//         if (!this.state.note) {
+//             return <Page404 />;
+//         }
 
-        return(
-            <section>
-                <DetailNote {...this.state.note} onArsip={this.onArchiveHandler} onDelete={this.onDeleteHandler} />
-            </section>
-        )
-    }
-}
+//         return(
+//             <section>
+//                 <DetailNote {...this.state.note} onArsip={this.onArchiveHandler} onDelete={this.onDeleteHandler} />
+//             </section>
+//         )
+//     }
+// }
 
-export default DetailPageWrapper;
+export default DetailPage;

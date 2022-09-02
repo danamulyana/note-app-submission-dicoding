@@ -3,6 +3,7 @@
 }
 .Navigation__items{
     display: flex;
+    background: var(--background-primary);
 
 }
 .Navigation__items-Links{
@@ -11,7 +12,7 @@
     line-height: 1.25rem;
     padding: 0.5rem 0.75rem 0.5rem 0.75rem;
     border-radius: 0.375rem;
-    color: rgb(15 23 42/1);
+    color: var(--primary-color);
 }
 .Navigation__items-Links:hover{
     background-color: rgba(238, 238, 238, 1);

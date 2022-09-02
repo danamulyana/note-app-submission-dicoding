@@ -1,65 +1,54 @@
 import React from "react";
 import Head from "../components/Head";
 import NoteList from "../components/NoteList";
-import { getArchivedNotes } from "../utils/local-data"
+import { getArchivedNotes } from "../utils/network-data"
 import Search from "../components/Search";
 import { useSearchParams } from "react-router-dom";
+import LocaleContext from "../context/LocaleContext";
+import { ArsipPageLang } from "../utils/language";
 
-function ArsipPageWrapper(){
+function ArsipPage(){
     const [SearchParams, setSearchParams] = useSearchParams();
+    const [notes,setNotes] = React.useState([]);
+    const [keyword, setKeyword] = React.useState(() => {
+        return SearchParams.get('keyword') || ''
+    });
+    const { lang } = React.useContext(LocaleContext)
 
-    const keyword = SearchParams.get('keyword');
-
-    function changeSearchParams(keyword){
+    const changeSearchParams = (keyword) => {
+        setKeyword(keyword);
         setSearchParams({ keyword });
     }
 
-    return <ArsipPage defaultKeyword={keyword} keywordChange={changeSearchParams} />
-}
+    React.useEffect(() => {
+        async function getContactActive(){
+            const { data } = await getArchivedNotes();
 
-class ArsipPage extends React.Component{
-    constructor(props){
-        super(props);
-
-        this.state = {
-            notes : getArchivedNotes(),
-            keyword: props.defaultKeyword || "",
+            setNotes(data);
         }
 
-        this.onKeywordChangeHandler = this.onKeywordChangeHandler.bind(this);
-    }
+        getContactActive();
+    },[]);
 
-    onKeywordChangeHandler(keyword){
-        this.setState(() => {
-            return{
-                keyword,
-            }
-        })
+    const filteredNotes = notes.filter((note) => {
+        return note.title.toLowerCase().includes(
+          keyword.toLowerCase()
+        );
+    });
 
-        this.props.keywordChange(keyword);
-    }
-    
-    render(){
-        const notes = this.state.notes.filter((note) => {
-            return note.title.toLocaleLowerCase().includes(
-                this.state.keyword.toLocaleLowerCase()
-            );
-        });
-
-        return(
-            <>
-                <section>
-                    <Head title="Personal Notes Arsip" subtitle="Catatan yang sudah di arsip" />
-                </section>
-                <section>
-                    <div className="search-container">
-                        <Search keyword={this.state.keyword} keywordChange={this.onKeywordChangeHandler} />
-                    </div>
-                    <NoteList notes={notes} type="arsip" />
-                </section>
-            </>
-        )
-    }
+    return(
+        <>
+            <section>
+                <Head title={ArsipPageLang[lang].title} subtitle={ArsipPageLang[lang].subtitle} />
+            </section>
+            <section>
+                <div className="search-container">
+                    <Search placeholder={ArsipPageLang[lang].search} keyword={keyword} keywordChange={changeSearchParams} />
+                </div>
+                <NoteList notes={filteredNotes} noList={ArsipPageLang[lang].list} />
+            </section>
+        </>
+    )
 }
 
-export default ArsipPageWrapper;
+export default ArsipPage;

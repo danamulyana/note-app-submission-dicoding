@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import NoteItem from './NoteItem';
 import "../css/Note.css";
 
-function NoteList({notes, type}){
+function NoteList({notes, noList}){
 
     if(!notes.length){
-        return <h4 className="NoResult">Tidak ada {type}</h4>
+        return <h4 className="NoResult">{noList}</h4>
     }
 
     return(
@@ -22,7 +22,7 @@ function NoteList({notes, type}){
 
 NoteList.propTypes = {
     notes: PropTypes.arrayOf(PropTypes.object).isRequired,
-    type: PropTypes.string.isRequired
+    noList: PropTypes.string.isRequired
 }
 
 export default NoteList;

@@ -1,61 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import "../css/InputNote.css";
+import useInput from '../hooks/useInput';
 
-class NoteInput extends React.Component {
-  constructor(props) {
-    super(props);
+function NoteInput({addNoteHandler, placeholder, lang}){
 
-    this.state = {
-      title: '',
-      body: '',
-    }
+  const [title,handleTitle] = useInput('');
+  const [body,setBody] = React.useState('');
 
-    this.onTitleChangeEventHandler = this.onTitleChangeEventHandler.bind(this);
-    this.onBodyChangeEventHandler = this.onBodyChangeEventHandler.bind(this);
-    this.onSubmitEventHandler = this.onSubmitEventHandler.bind(this);
-  }
-
-  onTitleChangeEventHandler(event) {
-    this.setState(() => {
-      return {
-        title: event.target.value,
-      }
-    });
-  }
-
-  onBodyChangeEventHandler(event) {
-    this.setState(() => {
-      return {
-        body: event.target.innerHTML,
-      }
-    });
-  }
-
-  onSubmitEventHandler(event) {
+  const onSubmitEventHandler = (event) =>  {
     event.preventDefault();
-    this.props.addNoteHandler(this.state);
+    addNoteHandler({title,body});
   }
 
-  render() {
-   return (
-     <form className='contact-form' onSubmit={this.onSubmitEventHandler}>
-        <div className='contact-input'>
-          <input type="text" placeholder="Title" value={this.state.title} onChange={this.onTitleChangeEventHandler} />
-        </div>
-        <div className='contact-input'>
-          <div className='contact-input__editable' data-placeholder="Body" contentEditable onInput={this.onBodyChangeEventHandler} />
-        </div>
-        <div className='contact-form__footer'>
-          <button type="submit">Tambah</button>
-        </div>
-     </form>
-   )
- }
+  const HandlerBodyInput = (event) => {
+    setBody(event.target.innerHTML);
+  }
+
+  return (
+    <form className='contact-form' onSubmit={onSubmitEventHandler}>
+       <div className='contact-input'>
+         <input type="text" placeholder={placeholder[lang].name} value={title} onChange={handleTitle} />
+       </div>
+       <div className='contact-input'>
+         <div className='contact-input__editable' data-placeholder={placeholder[lang].body} contentEditable onInput={HandlerBodyInput} />
+       </div>
+       <div className='contact-form__footer'>
+         <button type="submit">{placeholder[lang].button}</button>
+       </div>
+    </form>
+  )
 }
 
 NoteInput.propTypes = {
     addNoteHandler : PropTypes.func.isRequired,
+    placeholder: PropTypes.object.isRequired,
+    lang: PropTypes.string.isRequired
 }
 
 export default NoteInput;

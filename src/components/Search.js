@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 import { FiSearch } from 'react-icons/fi';
 
-function Search({keyword, keywordChange}){
+function Search({placeholder,keyword, keywordChange}){
     return (
         <div className="search">
             <div className="search__icon">
@@ -11,7 +11,7 @@ function Search({keyword, keywordChange}){
             <input
                 className="search__input"
                 type='text'
-                placeholder="cari berdasarkan title"
+                placeholder={placeholder}
                 value={keyword}
                 onChange={(event) => keywordChange(event.target.value)} />
         </div>
@@ -20,6 +20,7 @@ function Search({keyword, keywordChange}){
 }
 
 Search.propTypes = {
+    placeholder: PropTypes.string.isRequired,
     keyword: PropTypes.string.isRequired,
     keywordChange: PropTypes.func.isRequired
 }
