@@ -6,8 +6,10 @@ import { useSearchParams } from 'react-router-dom';
 import Search from "../components/Search";
 import { HomePageLang } from '../utils/language';
 import LocaleContext from '../context/LocaleContext';
+import Loading from "../components/Loading";
 
 function HomePage(){
+    const [loading,setLoading] = React.useState(true);
     const [SearchParams, setSearchParams] = useSearchParams();
     const [notes,setNotes] = React.useState([]);
     const [keyword, setKeyword] = React.useState(() => {
@@ -25,6 +27,7 @@ function HomePage(){
             const { data } = await getActiveNotes();
 
             setNotes(data);
+            setLoading(false);
         }
 
         getContactActive();
@@ -35,6 +38,10 @@ function HomePage(){
           keyword.toLowerCase()
         );
     });
+
+    if(loading){
+        return <Loading />
+    }
 
     return(
         <>

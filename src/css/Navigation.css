@@ -1,5 +1,6 @@
 .Navigation{
     margin-left: 1.5rem;
+    z-index: 9999;
 }
 .Navigation__items{
     display: flex;

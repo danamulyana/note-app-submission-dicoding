@@ -4,8 +4,10 @@ import { showFormattedDate } from '../utils/index';
 import '../css/DetailNote.css';
 import { FiArchive, FiTrash } from 'react-icons/fi'
 import parser from 'html-react-parser';
+import LocaleContext from '../context/LocaleContext';
 
 function DetailNote({ id,title,createdAt,body,archived,onArsip,onDelete }) {
+  const { lang } = React.useContext(LocaleContext);
   return (
     <div className='Detail-Note__container' id={id}>
         <div className='Detail-Note__header'>
@@ -15,7 +17,7 @@ function DetailNote({ id,title,createdAt,body,archived,onArsip,onDelete }) {
                 <button className='btn' onClick={() => onDelete()}><FiTrash /></button>
             </div>
         </div>
-        <span className='Detail-Note__createdAt'>{showFormattedDate(createdAt)}</span>
+        <span className='Detail-Note__createdAt'>{showFormattedDate(createdAt,lang)}</span>
         <p className='Detail-Note__body'>{parser(body)}</p>
     </div>
   );

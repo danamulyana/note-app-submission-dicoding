@@ -6,8 +6,10 @@ import Search from "../components/Search";
 import { useSearchParams } from "react-router-dom";
 import LocaleContext from "../context/LocaleContext";
 import { ArsipPageLang } from "../utils/language";
+import Loading from "../components/Loading";
 
 function ArsipPage(){
+    const [loading,setLoading] = React.useState(true);
     const [SearchParams, setSearchParams] = useSearchParams();
     const [notes,setNotes] = React.useState([]);
     const [keyword, setKeyword] = React.useState(() => {
@@ -25,6 +27,7 @@ function ArsipPage(){
             const { data } = await getArchivedNotes();
 
             setNotes(data);
+            setLoading(false);
         }
 
         getContactActive();
@@ -35,6 +38,10 @@ function ArsipPage(){
           keyword.toLowerCase()
         );
     });
+
+    if(loading){
+        return <Loading />
+    }
 
     return(
         <>

@@ -10,6 +10,17 @@ function NoteInput({addNoteHandler, placeholder, lang}){
 
   const onSubmitEventHandler = (event) =>  {
     event.preventDefault();
+
+    if(!title){
+      const message = lang === 'id' ? 'Judul Catatan Harus di isi' : 'Note Title Required';
+      return alert(message)
+    }
+
+    if(!body){
+      const message = lang === 'id' ? 'Isi Catatan Harus di isi' : 'Note Contents Required';
+      return alert(message)
+    }
+
     addNoteHandler({title,body});
   }
 

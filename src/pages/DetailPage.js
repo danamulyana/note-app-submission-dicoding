@@ -4,28 +4,47 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import DetailNote from "../components/DetailNote";
 import Page404 from "./Page404";
+import Loading from "../components/Loading";
 
 function DetailPage() {
     const { id } = useParams();
     const navigation = useNavigate();
     const [note,setNote] = React.useState();
+    const [loading, setLoading] = React.useState(true);
 
     React.useEffect(() => {
         async function getNoteFunc(){
             const { data } = await getNote(id);
 
             setNote(data);
+            setLoading(false);
         }
 
         getNoteFunc();
     },[]);
 
-    const onArchiveHandler = () => {
+    const onArchiveHandler = async () => {
+        if(!note.archived){
+            const { error } = await archiveNote(note.id);
 
+            if(!error){
+                navigation('/archives');   
+            }
+        }else{
+            const { error } = await unarchiveNote(note.id);
+            if(!error){
+                navigation('/');
+            }
+        }
     }
 
-    const onDeleteHandler = () => {
+    const onDeleteHandler = async () => {
+        await deleteNote(note.id);
+        navigation('/'); 
+    }
 
+    if(loading){
+        return <Loading />;
     }
 
     if (!note) {
@@ -38,45 +57,5 @@ function DetailPage() {
         </section>
     )
 }
-
-// class DetailPage extends React.Component{
-//     constructor(props){
-//         super(props);
-
-//         this.state = {
-//             note : getNote(props.id),
-//         }
-
-//         this.onArchiveHandler = this.onArchiveHandler.bind(this);
-//         this.onDeleteHandler = this.onDeleteHandler.bind(this);
-//     }
-
-//     onArchiveHandler(){
-//         if(!this.state.note.archived){
-//             archiveNote(this.state.note.id);
-//         }else{
-//             unarchiveNote(this.state.note.id);
-//         }
-
-//         this.props.navigation('/archives');    
-//     }
-
-//     onDeleteHandler(){
-//         deleteNote(this.state.note.id);
-//         this.props.navigation('/'); 
-//     }
-
-//     render(){
-//         if (!this.state.note) {
-//             return <Page404 />;
-//         }
-
-//         return(
-//             <section>
-//                 <DetailNote {...this.state.note} onArsip={this.onArchiveHandler} onDelete={this.onDeleteHandler} />
-//             </section>
-//         )
-//     }
-// }
 
 export default DetailPage;

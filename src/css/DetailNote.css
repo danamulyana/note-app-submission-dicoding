@@ -17,15 +17,22 @@
     white-space: nowrap;
     vertical-align: middle;
     margin-left: 1rem;
+    background: var(--background-primary);
+    color: var(--primary-color);
 }
 .Detail-Note__title{
     font-weight: 700;
     font-size: 2.5em;
     padding: 0 0 10px 0;
+    color: var(--primary-color);
 }
 .Detail-Note__createdAt{
     font-weight: 300;
     font-size: 1.2em;
     padding-bottom: 10px;
     display: inline-block;
+    color: var(--subtitle-color);
+}
+.Detail-Note__body{
+    color: var(--primary-color);
 }
