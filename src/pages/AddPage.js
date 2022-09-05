@@ -11,7 +11,6 @@ function AddPage() {
     const { lang } = React.useContext(LocaleContext);
 
     function onAddNoteHandler(note) {
-        console.log(note);
         addNote(note);
         navigate('/');
     }

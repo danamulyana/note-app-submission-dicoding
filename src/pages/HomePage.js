@@ -13,7 +13,7 @@ function HomePage(){
     const [SearchParams, setSearchParams] = useSearchParams();
     const [notes,setNotes] = React.useState([]);
     const [keyword, setKeyword] = React.useState(() => {
-        return SearchParams.get('keyword') || ''
+        return SearchParams.get('keyword') || '';
     });
     const { lang } = React.useContext(LocaleContext)
 
