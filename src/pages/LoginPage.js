@@ -1,18 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../css/Login.css';
 import { login } from '../utils/network-data';
 import LoginInput from '../components/LoginInput';
+import AuthContext from '../context/AuthContext';
 
-function LoginPage({ loginSuccess }) {
+function LoginPage() {
     const navigate = useNavigate();
+    const { onLoginSuccess } = React.useContext(AuthContext);
 
     async function onLogin({ email, password }) {
       const { error, data } = await login({ email, password });
    
       if (!error) {
-        loginSuccess(data);
+        onLoginSuccess(data);
         navigate('/');
       }
     }
@@ -29,8 +30,4 @@ function LoginPage({ loginSuccess }) {
     );
   }
    
-  LoginPage.propTypes = {
-    loginSuccess: PropTypes.func.isRequired,
-  }
-   
-  export default LoginPage;
+export default LoginPage;

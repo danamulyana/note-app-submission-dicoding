@@ -246,7 +246,7 @@ function App() {
               </header>
               <main>
                 <Routes>
-                  <Route path="/" element={<LoginPage loginSuccess={onLoginSuccess} />} />
+                  <Route path="/" element={<LoginPage />} />
                   <Route path="/register" element={<RegisterPage />} />
                   <Route path="/*" element={<Page404 />} />
                 </Routes>
